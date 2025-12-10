@@ -45,7 +45,7 @@ employee-management-system-COMPLETE/
 │   ├── jsconfig.json
 │   └── README.md
 │
-├── database_schema_complete.sql      # Database
+├── employee_management-202512110431.sql      # Database
 │
 └── Documentation/                     # Guides
     ├── README.md
@@ -70,7 +70,7 @@ cd employee-management-system-COMPLETE
 import database on .sql database 
 **Alternative method:**
 ```bash
-mysql -u root -p < database_schema_complete.sql
+mysql -u root -p < employee_management-202512110431.sql
 ```
 
 ### Step 3: Setup Backend
@@ -101,7 +101,7 @@ JWT_SECRET=your-super-secret-jwt-key-12345
 JWT_EXPIRES_IN=7d
 
 # Server Configuration
-PORT=5000
+PORT=5100
 NODE_ENV=development
 
 # File Upload Configuration
@@ -124,9 +124,9 @@ npm run dev
 
 **Expected output:**
 ```
-🚀 Server running on port 5000
-📡 API: http://localhost:5000/api
-❤️  Health: http://localhost:5000/api/health
+🚀 Server running on port 5100
+📡 API: http://localhost:5100/api
+❤️  Health: http://localhost:5100/api/health
 ```
 
 ### Step 4: Test Backend
@@ -135,7 +135,7 @@ Open new terminal:
 
 ```bash
 # Test health endpoint
-curl http://localhost:5000/api/health
+curl http://localhost:5100/api/health
 ```
 
 **Expected response:**
@@ -149,9 +149,9 @@ curl http://localhost:5000/api/health
 
 **Test login:**
 ```bash
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST http://localhost:5100/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"username":"superadmin","password":"Password123"}'
+  -d '{"email":"superadmin@company.com","password":"123456"}'
 ```
 
 **Expected response:**
@@ -160,7 +160,7 @@ curl -X POST http://localhost:5000/api/auth/login \
   "success": true,
   "message": "Login successful",
   "data": {
-    "user": { "id": 1, "username": "superadmin", ... },
+    "user": { "id": 1, "email": "superadmin@company.com", ... },
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
   }
 }
@@ -194,8 +194,8 @@ npm run dev
 Open browser: **http://localhost:3000**
 
 **Login with:**
-- Username: `superadmin`
-- Password: `Password123`
+- email: `superadmin@company.com`
+- Password: `123456`
 
 **You should see:**
 - ✅ Beautiful login page
@@ -234,7 +234,7 @@ mysql -u root -p
 1. Open MySQL Workbench
 2. Connect to your local MySQL server
 3. Click **File** → **Run SQL Script**
-4. Select `database_schema_complete.sql`
+4. Select `employee_management-202512110431.sql`
 5. Click **Run**
 
 #### Option 3: Using phpMyAdmin
@@ -242,7 +242,7 @@ mysql -u root -p
 1. Open phpMyAdmin in browser
 2. Create new database: `employee_management`
 3. Click **Import** tab
-4. Choose `database_schema_complete.sql`
+4. Choose `employee_management-202512110431.sql`
 5. Click **Go**
 
 #### Verify Database
@@ -254,7 +254,7 @@ USE employee_management;
 SHOW TABLES;
 
 -- Check users (should be 7)
-SELECT username, role FROM users;
+SELECT email, role FROM users;
 
 -- Check employees (should be 22)
 SELECT COUNT(*) as total FROM employees;
@@ -290,7 +290,7 @@ npm install
 ```env
 # Database
 DB_HOST=localhost          # MySQL host (usually localhost)
-DB_USER=root              # MySQL username
+DB_USER=root              # MySQL email
 DB_PASSWORD=xxx           # YOUR MySQL password
 DB_NAME=employee_management  # Database name
 DB_PORT=3306              # MySQL port (default 3306)
@@ -300,7 +300,7 @@ JWT_SECRET=xxx            # Secret key for JWT (change in production!)
 JWT_EXPIRES_IN=7d         # Token expiration (7 days)
 
 # Server
-PORT=5000                 # API port
+PORT=5100                 # API port
 NODE_ENV=development      # Environment (development/production)
 
 # Upload
@@ -379,8 +379,8 @@ npm install
 
 **.env.local** (Environment variables)
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
-NEXT_PUBLIC_UPLOAD_URL=http://localhost:5000/uploads
+NEXT_PUBLIC_API_URL=http://localhost:5100/api
+NEXT_PUBLIC_UPLOAD_URL=http://localhost:5100/uploads
 ```
 
 **next.config.js** (Next.js configuration)
@@ -423,12 +423,12 @@ After setup, verify everything works:
 mysql -u root -p -e "SHOW DATABASES;" | grep employee_management
 
 # Check backend
-curl http://localhost:5000/api/health
+curl http://localhost:5100/api/health
 
 # Check login
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST http://localhost:5100/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"username":"superadmin","password":"Password123"}' | jq .
+  -d '{"email":"superadmin@company.com","password":"123456"}' | jq .
 ```
 
 ### ✅ Frontend Checklist
@@ -444,7 +444,7 @@ curl -X POST http://localhost:5000/api/auth/login \
 **How to verify:**
 1. Open http://localhost:3000
 2. Check browser console (F12) - should be no errors
-3. Login with superadmin/Password123
+3. Login with superadmin@company.com/123456
 4. Dashboard should load
 5. Charts should render
 6. Sidebar should show menus
@@ -497,17 +497,17 @@ mysql_secure_installation
 mysql -u root -p
 CREATE DATABASE employee_management;
 USE employee_management;
-source database_schema_complete.sql;
+source superadmin.sql;
 ```
 
-#### Error: Port 5000 already in use
+#### Error: Port 5100 already in use
 
 **Problem:** Port is occupied
 
 **Solution:**
 ```bash
 # Find and kill process
-lsof -ti:5000 | xargs kill -9
+lsof -ti:5100 | xargs kill -9
 
 # Or change port in .env
 PORT=5001
@@ -536,7 +536,7 @@ cat jsconfig.json
 **Solution:**
 ```bash
 # Check backend is running
-curl http://localhost:5000/api/health
+curl http://localhost:5100/api/health
 
 # Check .env.local
 cat .env.local
@@ -577,7 +577,7 @@ npm run dev
 # Errors will show in red
 
 # Test endpoints manually
-curl -v http://localhost:5000/api/health
+curl -v http://localhost:5100/api/health
 ```
 
 **Frontend Debugging:**
@@ -607,7 +607,7 @@ SELECT * FROM permissions LIMIT 5;
 
 If everything works:
 
-✅ Backend running on http://localhost:5000
+✅ Backend running on http://localhost:5100
 ✅ Frontend running on http://localhost:3000
 ✅ Can login and see dashboard
 ✅ Charts loading properly
