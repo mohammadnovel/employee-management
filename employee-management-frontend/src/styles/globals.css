@@ -1,0 +1,305 @@
+/*====================================================================
+  1. IMPORTS & VARIABLES
+====================================================================*/
+
+/* Bootstrap Icons - Pastikan ini hanya diimpor sekali di global file */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css");
+
+/* Custom Variables */
+:root {
+  /* Primary Colors */
+  --primary-color: #3b82f6; /* Blue 500 */
+  --primary-hover: #2563eb; /* Blue 600 */
+  --secondary-color: #6366f1; /* Indigo 500 */
+  
+  /* Status Colors */
+  --success-color: #10b981; /* Emerald 500 */
+  --danger-color: #ef4444; /* Red 500 */
+  --warning-color: #f59e0b; /* Amber 500 */
+  --info-color: #06b6d4; /* Cyan 500 */
+  
+  /* Neutral Colors */
+  --dark-color: #1e293b; /* Slate 800 */
+  --light-color: #f8f9fa; /* Bootstrap Gray 100 */
+  --bg-color: #f3f4f6; /* Lighter background for main content */
+
+  /* Layout */
+  --sidebar-width: 260px;
+  --header-height: 60px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+}
+
+
+/*====================================================================
+  2. RESET & BASE STYLES
+====================================================================*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Menggunakan variable baru */
+  background-color: var(--bg-color); 
+}
+
+/* Custom Scrollbar (Tidak diubah, sudah baik) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a0a0a0; /* Sedikit lebih terang */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #707070;
+}
+
+
+/*====================================================================
+  3. LAYOUT & DASHBOARD STRUCTURE
+====================================================================*/
+
+/* Gaya Utama Konten (Untuk DashboardLayout) */
+.main-content {
+  margin-left: var(--sidebar-width);
+  transition: margin-left 0.3s ease;
+  padding-top: var(--header-height); /* Agar tidak tertutup Header/Navbar */
+}
+
+/* Container Dashboard */
+.dashboard-container {
+  padding: 1.5rem; /* Padding konten utama */
+}
+
+/* Responsive Sidebar Toggle (Opsional, tergantung implementasi JS) */
+@media (max-width: 991.98px) {
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+
+/*====================================================================
+  4. COMPONENTS: CARDS & STATS
+====================================================================*/
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm); /* Menggunakan variable shadow */
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  /* Menghilangkan transform hover yang agresif di list/table card */
+  /* transform: translateY(-2px); */
+  box-shadow: var(--shadow-md); 
+}
+
+.card-header {
+  background-color: white; /* Dibuat eksplisit */
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1.25rem 1.5rem;
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Stat Cards (Slightly improved gradients) */
+.stat-card {
+  /* Menggunakan linear-gradient yang lebih menarik */
+  background: linear-gradient(135deg, var(--primary-color) 0%, #4a8ffb 100%);
+  color: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  height: 100%;
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card.success {
+  background: linear-gradient(135deg, var(--success-color), #059669);
+}
+
+.stat-card.warning {
+  background: linear-gradient(135deg, var(--warning-color), #d97706);
+}
+
+.stat-card.danger {
+  background: linear-gradient(135deg, var(--danger-color), #dc2626);
+}
+
+.stat-card.info {
+  background: linear-gradient(135deg, var(--info-color), #0891b2);
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+
+/*====================================================================
+  5. COMPONENTS: BUTTONS, TABLES, FORMS
+====================================================================*/
+
+/* Buttons */
+.btn {
+  border-radius: 8px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600; /* Dibuat sedikit lebih tebal */
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover); /* Menggunakan variable hover */
+  border-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* Tables */
+.table {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background-color: var(--light-color); /* Menggunakan variable */
+  border-bottom: 2px solid #e5e7eb;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  font-size: 0.75rem; /* Dibuat sedikit lebih kecil agar clean */
+  letter-spacing: 0.5px;
+}
+
+.table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.table tbody tr:hover {
+  background-color: #f3f4f6; /* Background hover yang lebih jelas */
+}
+
+/* Badges (Tidak diubah, sudah baik) */
+.badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 600; /* Dibuat lebih tebal */
+  font-size: 0.7rem; /* Dibuat sedikit lebih kecil */
+}
+
+/* Forms */
+.form-control, .form-select {
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  padding: 0.625rem 1rem;
+  transition: all 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-color);
+  /* 💡 PERBAIKAN: Gunakan warna primary untuk shadow focus */
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25); 
+}
+
+.form-label {
+  font-weight: 600; /* Dibuat lebih tebal */
+  color: var(--dark-color);
+  margin-bottom: 0.35rem; /* Dibuat lebih dekat ke input */
+}
+
+.input-group-text {
+  border-radius: 8px 0 0 8px;
+  background-color: var(--light-color);
+}
+
+/*====================================================================
+  6. UTILITIES & ANIMATIONS
+====================================================================*/
+
+/* Page Header (Dibuat lebih modern) */
+.page-header {
+  background: white;
+  border-radius: 16px; /* Lebih besar */
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem; /* Jarak lebih besar */
+  box-shadow: var(--shadow-sm);
+}
+
+.page-title {
+  font-size: 2rem; /* Dibuat lebih besar */
+  font-weight: 700;
+  color: var(--dark-color);
+  margin-bottom: 0;
+}
+
+.page-subtitle {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out; /* Dibuat sedikit lebih lambat */
+}
+
+/* Toast Customization (Dibuat lebih konsisten) */
+.Toastify__toast {
+  border-radius: 10px; /* Sedikit lebih membulat */
+  font-family: inherit;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.Toastify__toast--success { background-color: var(--success-color); }
+.Toastify__toast--error { background-color: var(--danger-color); }
+.Toastify__toast--warning { background-color: var(--warning-color); }
+.Toastify__toast--info { background-color: var(--primary-color); }
+
+/* Utilities */
+.cursor-pointer { cursor: pointer; }
+.text-muted-custom { color: #6b7280 !important; }
+.shadow-sm-custom { box-shadow: var(--shadow-sm) !important; }
+
+/* Responsive (Minimal adjustments) */
+@media (max-width: 991.98px) {
+  .stat-card {
+    margin-bottom: 1rem;
+  }
+}
